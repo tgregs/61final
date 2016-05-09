@@ -1,4 +1,5 @@
-# Final exam for CST 112 (2016 May 9)
+# Final exam for CST 112  
+<P ALIGN=RIGHT>(2016 May 9)</P>
 
 **Fork this repo to your Github account.  
 Create new file named "``Final-Lastname.pde``".**   _(Use your own last name instead of “Lastname”.)_  
