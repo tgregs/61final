@@ -1,23 +1,37 @@
-//Project 5 CST 112
+//Final Project CST 112
+// Trevor Gregory
 String author = "Trevor Gregory";
-String title=  "Project 5";
+String title=  "Final Project";
 String course= "CST 112";
-String who[]= {"Leo","Bob","Chuck","Phil","Mike","George","Elliot","Jake"};
+String who[]= {"Leo","Bob","Chuck","Phil","Mike","George","Elliot","Jake"}; //name list
+String who2[] = {"Rob", "Carl", "Ralph","Jack","Sutton","Burton","Bruce"};
+String buttonNames[]={"Raise","Bonus","Change"};
 int amount = 8;
-Person[] persons = new Person[amount];
+int amount2 = 3;
+int amount3 = 11;
+// Arrays for the different Objects
+Person[] persons = new Person[amount]; 
+Person[] tre = new Person[amount3];
 Cloud[] clouds = new Cloud[amount];
-
+Button[] buttons = new Button[amount2];
 void setup() {
 
-  size(800, 600);
-  for(int i = 0; i < amount; i++){
+  size(750, 550);
+  for(int i = 0; i < amount; i++){ 
   persons[i] = new Person(who[i]);
 }
+ 
   for(int i = 0; i < amount; i++){
    clouds[i] = new Cloud();
 }
+    for(int i = 0; i < amount2; i++){
+   buttons[i] = new Button(buttonNames[i]);
 }
 
+//  for(int i = 0; i < amount; i++){ 
+//  tre[i] = new Person();
+//}
+}
 void reset(){
    for(int i = 0; i < amount; i++){
   persons[i] = new Person(who[i]);
@@ -28,6 +42,7 @@ void draw() {
   scene();
   lineup();
   skycloud();
+  buttonarray();
   messages();
   directions();
 }
@@ -37,25 +52,33 @@ void directions(){
   text( s, 15,60);
 }
 
-void lineup(){
+void lineup(){  // Displays are the Person objects in an Array
  int x = 50;   
-  for(int i = 0; i < 8; i++){
+  for(int i = 0; i < amount; i++){
     persons[i].showPerson(x);
      x = x+80;
 }
+
 }
 
-void skycloud(){
+void skycloud(){  // Displays all the cloud objects in an Array
   int x = width/3;
-     for(int i = 0; i < 8; i++){
+     for(int i = 0; i < amount; i++){
    clouds[i].showCloud(x);
    x= x+ 40;
 }
 }
- 
+
+void buttonarray(){ // Displays all buttons objects in an Array
+  int x = 30;
+     for(int i = 0; i < amount2; i++){
+   buttons[i].showButton(x);
+   x= x+ 80;
+}
+}   
 void messages(){
   fill(0);
-  textSize(16);
+  textSize(14);
   text(title, width/2, 20);
   text(author, 15,20);
   text(course, 15,40);
@@ -71,13 +94,23 @@ void scene() {
 void keyPressed() {
   if (key == 'q') exit();
   if (key == 'r') reset();
- // if (key == 't') tall( persons, amount );
-  //
- // if (key == 'w') swap( people, many-1, whereWide(people,many) );
-  //if (key == 'n') swap( people, many-1, whereNarrow(people,many) );
+  if (key == 'b'){
+   // Person.salary = Person.salary + 1000;
+  }
+    
+    
+}
+// Checks the conditions for button location 
+boolean hit(float mx, float my, float bx,float by, float w, float h){
+  //Return true if (mx,my) is within rect. 
+   if (mx>bx&&mx<bx+w && my>by && my<by+h) return true;
+   else return false;
+}
+void mousePressed(){
+//  if( hit(mouseX,mouseY,25,400,50,30)) raise();
 
 }
-
+//Class Def for Person 
 
 class Person {
   float r, g, b;
@@ -85,6 +118,9 @@ class Person {
   float pW, pH;
   float headW,headH;
   String name = "?";
+  int age = (int) random(1,99);
+  int salary = (int) random(1000,100000);
+  //Constructors
   Person(String who) {
     r= random(255);
     g = random(255);
@@ -96,19 +132,23 @@ class Person {
     headW = random(20,40);
     headH = random(20,40);
     name = who;
-  }
+  } //Methods
   void showPerson(int x) {
     fill(r, g, b);
     rectMode(CORNER);
     rect( x, yP, pW, -pH);
     text(name,x+10,yP+20);
+    text ("Age "+age,x,yP+90);
+    if (age >= 18){
+     text ("$ "+salary,x,yP+115);
+    }
     int ft, in;
     ft= int(pH/12);
     in= int(pH %12);
     text( ft+"' " + in+" '' ",x, yP+45);
     float lbs = (pH * pW * pW) / 500;
     text (int(lbs())+" # ", x, yP+65);
-   // ellipse(x+10,pH,headW,headH);
+   
   }
   float lbs(){
     return (pH * pW * pW) / 500;
@@ -128,7 +168,21 @@ class Cloud {
 void showCloud(int x){
   fill(255,255,255);
   ellipse(x,cY,cW,cH);
- 
-
 }
 } 
+
+class Button{
+  float  yB;
+  String name = "?";
+Button(String buttonNames){
+  
+  yB = 510;
+  name = buttonNames;
+}
+void showButton(int x){
+  fill(255,102,102);
+  rect(x,yB,60,30);
+  fill(0);
+  text(name,x+5,yB+20);
+}
+}
